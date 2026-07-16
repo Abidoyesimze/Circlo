@@ -2,6 +2,7 @@
 /target
 **/*.rs.bk
 *.pdb
+test_snapshots/
 
 # Node
 node_modules/
