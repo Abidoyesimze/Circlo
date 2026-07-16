@@ -1,0 +1,40 @@
+# Rust / Soroban
+/target
+**/*.rs.bk
+*.pdb
+
+# Node
+node_modules/
+dist/
+dist-ssr/
+*.local
+.npm/
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Editors / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Stellar / Soroban local identities & artifacts
+.soroban/
+*.wasm.map
+
+# Vercel
+.vercel
