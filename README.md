@@ -6,10 +6,11 @@ person who collects everyone's cash, keeps a notebook, and pays out each
 round — with a Soroban smart contract that enforces the same rules
 transparently and without a single point of failure.
 
-**Live demo:** _add your deployed Vercel URL here_
+**Live demo:** [circlo-five.vercel.app](https://circlo-five.vercel.app/)
 **Demo video:** _add your video link here_
 **Deployed contract (Stellar testnet):**
 [`CC3JCXU6XMMBZDRSFLNE36DQUGIY3HQ3HAIXGFHJBF4TRQD6TFMXS53P`](https://stellar.expert/explorer/testnet/contract/CC3JCXU6XMMBZDRSFLNE36DQUGIY3HQ3HAIXGFHJBF4TRQD6TFMXS53P)
+**Feedback form:** [forms.gle/DvrEyV5fqrnumpGL7](https://forms.gle/DvrEyV5fqrnumpGL7)
 
 ## Screenshots
 
@@ -252,18 +253,22 @@ To get test funds:
 
 ## 8. Production deployment
 
-The frontend is deployed on Vercel. To redeploy: import this repository at
-[vercel.com](https://vercel.com/new), set the project root directory to
-`frontend`, and deploy — no environment variables are required, since the
-testnet contract id and RPC endpoint are checked into `config.ts` by design
-(this is a public testnet contract, not a secret).
+The frontend is live on Vercel at **[circlo-five.vercel.app](https://circlo-five.vercel.app/)**.
+To redeploy: import this repository at [vercel.com](https://vercel.com/new),
+set the project root directory to `frontend`, and deploy — no environment
+variables are required, since the testnet contract id and RPC endpoint are
+checked into `config.ts` by design (this is a public testnet contract, not
+a secret).
 
 ## 9. Feedback
 
-We're collecting feedback from the testnet cohort via the "Feedback" link
-in the app's footer (a Google Form) — see `FEEDBACK_FORM_URL` in
-[`frontend/src/config.ts`](frontend/src/config.ts). A summary of responses
-will be added here once collected: _add your feedback summary here_.
+We're collecting feedback from the testnet cohort via the
+**["Feedback" link](https://forms.gle/DvrEyV5fqrnumpGL7)** in the app's
+footer (a Google Form) — see `FEEDBACK_FORM_URL` in
+[`frontend/src/config.ts`](frontend/src/config.ts). Responses are tracked
+in [this spreadsheet](https://docs.google.com/spreadsheets/d/1iywgRI2UVUCP-MnDdnMVbQG9tDKBUwyJC7yVnO4PuP4/edit?usp=sharing).
+A written summary will be added here once enough responses come in:
+_add your feedback summary here_.
 
 ## License
 

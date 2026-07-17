@@ -28,5 +28,4 @@ export const EXPLORER_ADDRESS_URL = (address: string) =>
 export const EXPLORER_CONTRACT_URL = (contractId: string) =>
   `https://stellar.expert/explorer/testnet/contract/${contractId}`;
 
-/** Replace with your own Google Form (or other feedback form) link. */
-export const FEEDBACK_FORM_URL = "https://forms.gle/REPLACE_ME";
+export const FEEDBACK_FORM_URL = "https://forms.gle/DvrEyV5fqrnumpGL7";
