@@ -1,0 +1,16 @@
+{
+  "name": "Circlo",
+  "short_name": "Circlo",
+  "description": "Trustless rotating savings circles on Stellar.",
+  "start_url": "/app",
+  "display": "standalone",
+  "background_color": "#fffcf5",
+  "theme_color": "#4338ca",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
