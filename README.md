@@ -268,12 +268,12 @@ footer (a Google Form) — see `FEEDBACK_FORM_URL` in
 [`frontend/src/config.ts`](frontend/src/config.ts). Full raw responses are
 in [this spreadsheet](https://docs.google.com/spreadsheets/d/1iywgRI2UVUCP-MnDdnMVbQG9tDKBUwyJC7yVnO4PuP4/edit?usp=sharing).
 
-### Summary (9 responses so far)
+### Summary (10 responses so far)
 
-- **4.9 / 5 average rating** (eight 5s, one 4); all 9 said they'd recommend
+- **4.9 / 5 average rating** (nine 5s, one 4); all 10 said they'd recommend
   Circlo to others.
-- **No bugs reported** by any respondent — several explicitly called the
-  flow "seamless" / "smooth."
+- **No bugs reported** by any of the 10 respondents — several explicitly
+  called the flow "seamless" / "smooth."
 - **Most-liked:** the simplicity of the UI, the activity feed (seeing
   exactly when someone joined/contributed/a circle was created), the
   payout-order visibility, and the trustline error message being caught
