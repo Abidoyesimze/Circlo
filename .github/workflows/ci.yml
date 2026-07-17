@@ -50,5 +50,8 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Unit tests
+        run: npm test --workspace frontend
+
       - name: Build
         run: npm run build
