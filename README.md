@@ -239,10 +239,16 @@ To get test funds:
 
 1. Fund a testnet account with XLM via
    [Friendbot](https://friendbot.stellar.org).
-2. Establish a USDC trustline (`changeTrust`) on that account — see
-   [Circle's quickstart](https://developers.circle.com/stablecoins/quickstart-setup-usdc-trustline-stellar).
-3. Request USDC at [faucet.circle.com](https://faucet.circle.com) (20 USDC
-   per address per network every 2 hours).
+2. Establish a USDC trustline (`changeTrust`) on that account. In Freighter:
+   switch the network to **Testnet**, open **Manage Assets → Add asset**,
+   and add it manually with asset code `USDC` and issuer
+   `GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5` (it won't show
+   up in the searchable directory, which only indexes mainnet assets). See
+   also [Circle's quickstart](https://developers.circle.com/stablecoins/quickstart-setup-usdc-trustline-stellar).
+3. **Only after** the trustline exists, request USDC at
+   [faucet.circle.com](https://faucet.circle.com) (20 USDC per address per
+   network every 2 hours) — the faucet cannot create the trustline for you,
+   it can only fund one that already exists.
 
 ## 8. Production deployment
 

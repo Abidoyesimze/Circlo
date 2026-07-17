@@ -183,8 +183,10 @@ export function CreateCircle() {
             </div>
 
             <p className="text-xs text-muted-foreground">
-              Need testnet USDC? Get some (and set up the trustline
-              automatically) at{" "}
+              Need testnet USDC? First add a USDC trustline in Freighter
+              (Manage Assets → Add asset → issuer{" "}
+              <span className="font-mono">GBBD47IF...LFLA5</span>), then
+              request funds at{" "}
               <a
                 href="https://faucet.circle.com"
                 target="_blank"

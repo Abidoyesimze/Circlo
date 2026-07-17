@@ -98,7 +98,7 @@ function humanizeContractError(code: string): string {
  */
 function humanizeSimulationError(raw: string): string {
   if (/trustline entry is missing/i.test(raw)) {
-    return "Your wallet doesn't have a testnet USDC trustline yet. Get testnet USDC — which sets up the trustline for you — at faucet.circle.com, then try again.";
+    return "Your wallet doesn't have a testnet USDC trustline yet. Add one in Freighter (Manage Assets → Add asset, issuer GBBD47IF...LFLA5), get funds at faucet.circle.com, then try again.";
   }
   if (/insufficient balance|balance is not sufficient/i.test(raw)) {
     return "Your USDC balance isn't enough for this. Get more testnet USDC at faucet.circle.com.";
