@@ -262,13 +262,32 @@ a secret).
 
 ## 9. Feedback
 
-We're collecting feedback from the testnet cohort via the
+We collected feedback from the testnet cohort via the
 **["Feedback" link](https://forms.gle/DvrEyV5fqrnumpGL7)** in the app's
 footer (a Google Form) — see `FEEDBACK_FORM_URL` in
-[`frontend/src/config.ts`](frontend/src/config.ts). Responses are tracked
+[`frontend/src/config.ts`](frontend/src/config.ts). Full raw responses are
 in [this spreadsheet](https://docs.google.com/spreadsheets/d/1iywgRI2UVUCP-MnDdnMVbQG9tDKBUwyJC7yVnO4PuP4/edit?usp=sharing).
-A written summary will be added here once enough responses come in:
-_add your feedback summary here_.
+
+### Summary (9 responses so far)
+
+- **4.9 / 5 average rating** (eight 5s, one 4); all 9 said they'd recommend
+  Circlo to others.
+- **No bugs reported** by any respondent — several explicitly called the
+  flow "seamless" / "smooth."
+- **Most-liked:** the simplicity of the UI, the activity feed (seeing
+  exactly when someone joined/contributed/a circle was created), the
+  payout-order visibility, and the trustline error message being caught
+  and explained clearly instead of failing silently.
+- **Most requested:**
+  - A discovery page to browse/join public circles instead of only by ID.
+  - A dispute-raising mechanism for members.
+  - Two respondents asked for "contributor-triggered payout" / "payout
+    without admin approval" — `trigger_payout` is already permissionless
+    (any member can call it once a cycle is ready), so this reads as a UI
+    clarity gap rather than a missing feature: the action isn't
+    communicated as available to non-admins clearly enough.
+  - "Sign in with Google" — not applicable given the non-custodial wallet
+    model, but signals some users expected a more familiar auth pattern.
 
 ## License
 
