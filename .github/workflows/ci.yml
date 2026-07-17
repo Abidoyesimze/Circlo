@@ -27,7 +27,17 @@ jobs:
         run: cargo clippy -p circlo --all-targets -- -D warnings
 
       - name: Install stellar CLI
-        run: cargo install --locked stellar-cli --version ^25
+        # A prebuilt binary rather than `cargo install --locked`: the
+        # published Cargo.lock for stellar-cli 25.x pins ethnum 1.5.2, which
+        # fails to compile on current stable rustc (a fixed transmute size
+        # check on TryFromIntError) — ethnum 1.5.3 fixes it, but --locked
+        # can't pick that up.
+        run: |
+          curl -sL -o stellar-cli.tar.gz \
+            https://github.com/stellar/stellar-cli/releases/download/v25.2.0/stellar-cli-25.2.0-x86_64-unknown-linux-gnu.tar.gz
+          tar -xzf stellar-cli.tar.gz
+          sudo mv stellar /usr/local/bin/
+          stellar --version
 
       - name: stellar contract build
         run: stellar contract build
