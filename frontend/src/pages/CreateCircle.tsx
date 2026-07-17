@@ -8,8 +8,8 @@ import { Info } from "lucide-react";
 import { useWallet } from "@/contexts/WalletContext";
 import { getContractClient } from "@/lib/contract";
 import { sendContract } from "@/lib/tx";
-import { parseTokenAmount } from "@/lib/utils";
-import { TESTNET_USDC_ADDRESS } from "@/config";
+import { parseTokenAmount, truncateAddress } from "@/lib/utils";
+import { EXPLORER_CONTRACT_URL, TESTNET_USDC_ADDRESS } from "@/config";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -168,6 +168,18 @@ export function CreateCircle() {
                 The deposit is refundable once the circle completes, minus arrears for any missed
                 contributions. It's what gives the fallback penalty for defaulting real teeth.
               </p>
+            </div>
+
+            <div className="flex items-center justify-between rounded-lg border border-border px-3 py-2 text-xs text-muted-foreground">
+              <span>Settlement token</span>
+              <a
+                href={EXPLORER_CONTRACT_URL(TESTNET_USDC_ADDRESS)}
+                target="_blank"
+                rel="noreferrer"
+                className="font-mono hover:text-foreground"
+              >
+                Testnet USDC ({truncateAddress(TESTNET_USDC_ADDRESS)})
+              </a>
             </div>
 
             <Button type="submit" className="w-full" disabled={submitting}>
