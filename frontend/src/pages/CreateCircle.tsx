@@ -182,6 +182,20 @@ export function CreateCircle() {
               </a>
             </div>
 
+            <p className="text-xs text-muted-foreground">
+              Need testnet USDC? Get some (and set up the trustline
+              automatically) at{" "}
+              <a
+                href="https://faucet.circle.com"
+                target="_blank"
+                rel="noreferrer"
+                className="underline hover:text-foreground"
+              >
+                faucet.circle.com
+              </a>
+              .
+            </p>
+
             <Button type="submit" className="w-full" disabled={submitting}>
               {submitting ? "Creating..." : "Create Circle"}
             </Button>

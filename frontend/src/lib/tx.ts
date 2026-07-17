@@ -61,7 +61,7 @@ export async function sendContract<T>(
       err instanceof ContractCallError
         ? humanizeContractError(err.message)
         : err instanceof Error
-          ? err.message
+          ? humanizeSimulationError(err.message)
           : "Something went wrong";
     toast.error("Transaction failed", { id: toastId, description: message });
     throw err;
@@ -86,4 +86,30 @@ function humanizeContractError(code: string): string {
     InvalidInterval: "Enter a cycle length greater than zero.",
   };
   return map[code] ?? code;
+}
+
+/**
+ * Errors that never reach our own contract's Result::Err — a failed cross-
+ * contract call into the token contract (no trustline, insufficient
+ * balance) or a rejected Freighter signature — surface as a raw simulation/
+ * submission error instead. These come back as a wall of diagnostic-event
+ * XDR dumps, which is useless to a user; recognize the common cases and
+ * otherwise show a short, truncated line instead of the whole blob.
+ */
+function humanizeSimulationError(raw: string): string {
+  if (/trustline entry is missing/i.test(raw)) {
+    return "Your wallet doesn't have a testnet USDC trustline yet. Get testnet USDC — which sets up the trustline for you — at faucet.circle.com, then try again.";
+  }
+  if (/insufficient balance|balance is not sufficient/i.test(raw)) {
+    return "Your USDC balance isn't enough for this. Get more testnet USDC at faucet.circle.com.";
+  }
+  if (/user declined|rejected|user cancelled/i.test(raw)) {
+    return "Signature request was declined in Freighter.";
+  }
+  if (/underfunded/i.test(raw)) {
+    return "Not enough XLM in your wallet to cover the network fee.";
+  }
+
+  const firstLine = raw.split("\n")[0]?.trim() ?? raw;
+  return firstLine.length > 160 ? `${firstLine.slice(0, 160)}…` : firstLine;
 }
