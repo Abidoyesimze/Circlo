@@ -431,3 +431,80 @@ fn invalid_create_circle_params_rejected() {
         .unwrap();
     assert_eq!(err, Error::InvalidMaxMembers);
 }
+
+#[test]
+fn concurrent_circles_are_fully_independent() {
+    // One contract instance, two circles running at the same time with
+    // different sizes, amounts, and cycle lengths — proving state for one
+    // never leaks into or blocks the other.
+    let ctx = setup();
+    let a_admin = Address::generate(&ctx.env);
+    let a_m2 = Address::generate(&ctx.env);
+    let b_admin = Address::generate(&ctx.env);
+    let b_m2 = Address::generate(&ctx.env);
+    let b_m3 = Address::generate(&ctx.env);
+
+    for who in [&a_admin, &a_m2, &b_admin, &b_m2, &b_m3] {
+        fund(&ctx, who, FUNDING);
+    }
+
+    const CONTRIBUTION_B: i128 = 25_0000000;
+    const CYCLE_B: u64 = 24 * 60 * 60;
+
+    let circle_a = ctx.client.create_circle(
+        &a_admin,
+        &ctx.token.address,
+        &CONTRIBUTION,
+        &0,
+        &CYCLE_SECONDS,
+        &2,
+    );
+    let circle_b = ctx.client.create_circle(
+        &b_admin,
+        &ctx.token.address,
+        &CONTRIBUTION_B,
+        &0,
+        &CYCLE_B,
+        &3,
+    );
+    assert_ne!(circle_a, circle_b);
+
+    ctx.client.join_circle(&circle_a, &a_m2);
+    ctx.client.join_circle(&circle_b, &b_m2);
+    ctx.client.join_circle(&circle_b, &b_m3);
+
+    ctx.client.start_circle(&circle_a, &a_admin);
+    ctx.client.start_circle(&circle_b, &b_admin);
+
+    // Only circle B receives contributions this round; circle A stays
+    // untouched and must still report zero progress.
+    ctx.client.contribute(&circle_b, &b_admin);
+    ctx.client.contribute(&circle_b, &b_m2);
+    ctx.client.contribute(&circle_b, &b_m3);
+
+    let status_a = ctx.client.get_status(&circle_a);
+    assert_eq!(status_a.core.contributed_count, 0);
+    assert!(!ctx.client.check_cycle_complete(&circle_a));
+    assert!(ctx.client.check_cycle_complete(&circle_b));
+
+    // Settling B must not advance or otherwise affect A.
+    ctx.client.trigger_payout(&circle_b);
+    let status_a = ctx.client.get_status(&circle_a);
+    let status_b = ctx.client.get_status(&circle_b);
+    assert_eq!(status_a.core.current_cycle, 1);
+    assert_eq!(status_b.core.current_cycle, 2);
+
+    // A's own contribution amount/terms are exactly what it was created
+    // with, unaffected by B's different terms.
+    assert_eq!(status_a.core.contribution_amount, CONTRIBUTION);
+    assert_eq!(status_b.core.contribution_amount, CONTRIBUTION_B);
+
+    assert_eq!(
+        ctx.client.get_my_circles(&a_admin),
+        soroban_sdk::vec![&ctx.env, circle_a]
+    );
+    assert_eq!(
+        ctx.client.get_my_circles(&b_admin),
+        soroban_sdk::vec![&ctx.env, circle_b]
+    );
+}
