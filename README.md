@@ -11,6 +11,8 @@ transparently and without a single point of failure.
 **Deployed contract (Stellar testnet):**
 [`CC3JCXU6XMMBZDRSFLNE36DQUGIY3HQ3HAIXGFHJBF4TRQD6TFMXS53P`](https://stellar.expert/explorer/testnet/contract/CC3JCXU6XMMBZDRSFLNE36DQUGIY3HQ3HAIXGFHJBF4TRQD6TFMXS53P)
 **Feedback form:** [forms.gle/DvrEyV5fqrnumpGL7](https://forms.gle/DvrEyV5fqrnumpGL7)
+**Feedback export (Excel):** [docs/feedback/circlo-feedback-responses.xlsx](docs/feedback/circlo-feedback-responses.xlsx)
+**Pitch deck:** _add link once published_
 
 ## Screenshots
 
@@ -21,6 +23,10 @@ transparently and without a single point of failure.
 | Circle detail | Mobile |
 | --- | --- |
 | ![Circle detail page](docs/screenshots/circle-detail.png) | ![Mobile dashboard and circle detail](docs/screenshots/dashboard-mobile.png) ![Mobile circle detail](docs/screenshots/circle-detail-mobile.png) |
+
+| Discover Circles | Protocol Stats (proof of activity) |
+| --- | --- |
+| ![Discover circles page](docs/screenshots/discover.png) | ![Protocol stats page](docs/screenshots/stats.png) |
 
 ## 1. Problem
 
@@ -260,13 +266,15 @@ variables are required, since the testnet contract id and RPC endpoint are
 checked into `config.ts` by design (this is a public testnet contract, not
 a secret).
 
-## 9. Feedback
+## 9. Feedback and iteration
 
 We collected feedback from the testnet cohort via the
 **["Feedback" link](https://forms.gle/DvrEyV5fqrnumpGL7)** in the app's
 footer (a Google Form) — see `FEEDBACK_FORM_URL` in
 [`frontend/src/config.ts`](frontend/src/config.ts). Full raw responses are
-in [this spreadsheet](https://docs.google.com/spreadsheets/d/1iywgRI2UVUCP-MnDdnMVbQG9tDKBUwyJC7yVnO4PuP4/edit?usp=sharing).
+in [this spreadsheet](https://docs.google.com/spreadsheets/d/1iywgRI2UVUCP-MnDdnMVbQG9tDKBUwyJC7yVnO4PuP4/edit?usp=sharing)
+and exported to
+[`docs/feedback/circlo-feedback-responses.xlsx`](docs/feedback/circlo-feedback-responses.xlsx).
 
 ### Summary (10 responses so far)
 
@@ -278,16 +286,91 @@ in [this spreadsheet](https://docs.google.com/spreadsheets/d/1iywgRI2UVUCP-MnDdn
   exactly when someone joined/contributed/a circle was created), the
   payout-order visibility, and the trustline error message being caught
   and explained clearly instead of failing silently.
-- **Most requested:**
-  - A discovery page to browse/join public circles instead of only by ID.
-  - A dispute-raising mechanism for members.
-  - Two respondents asked for "contributor-triggered payout" / "payout
-    without admin approval" — `trigger_payout` is already permissionless
-    (any member can call it once a cycle is ready), so this reads as a UI
-    clarity gap rather than a missing feature: the action isn't
-    communicated as available to non-admins clearly enough.
-  - "Sign in with Google" — not applicable given the non-custodial wallet
-    model, but signals some users expected a more familiar auth pattern.
+- **Most requested:** a discovery page, a dispute mechanism, clearer
+  messaging that payout doesn't need admin approval, and (from one
+  respondent) a more familiar sign-in pattern.
+
+### What shipped in direct response, with commits
+
+| Feedback | Change | Commit |
+| --- | --- | --- |
+| "A page dedicated to see random circles that interest me" / discovery instead of join-by-ID only | Added a **Discover Circles** page, sourced from on-chain `CircleCreated` events (no contract redeploy needed) | [`4d324a6`](https://github.com/Abidoyesimze/Circlo/commit/4d324a6) |
+| "I think a contributor should be able to trigger the payout without the admin" / "automatic payout without admin approval" (2 respondents) | `trigger_payout` was already permissionless — added explicit copy on the Settle button ("No admin approval needed...") so this is discoverable instead of assumed unavailable | [`07b1657`](https://github.com/Abidoyesimze/Circlo/commit/07b1657) |
+| "I love how the error handling is when I haven't added my USDC trustline" (validated an existing fix, motivated going further) | Added a **dynamic onboarding checklist** on the Dashboard that checks the wallet's real on-chain state (funded / trustline / balance) via Horizon and only shows what's actually missing | [`a21642b`](https://github.com/Abidoyesimze/Circlo/commit/a21642b) |
+| Root cause of the trustline confusion in the first place | Replaced raw XDR error dumps with plain-language messages for missing trustline / insufficient balance / declined signature / underfunded fees | [`c05f598`](https://github.com/Abidoyesimze/Circlo/commit/c05f598) |
+| — | Corrected inaccurate in-app copy claiming the faucet sets up the trustline automatically (it doesn't — the account must submit `changeTrust` itself) | [`65d3532`](https://github.com/Abidoyesimze/Circlo/commit/65d3532) |
+
+### Deliberately not built, and why
+
+- **A dispute-raising mechanism.** Two respondents asked for this. We
+  considered it and decided against building it now: Circlo's entire pitch
+  is removing the human arbiter from the loop (see [§4](#4-smart-contract-design)),
+  and any dispute resolution needs a judge — reintroducing one, even a soft
+  one, contradicts the trust model rather than completing it. A version
+  worth building later would need real design (e.g. a per-circle,
+  member-elected arbiter with a bounded scope, or a stake-slashing vote),
+  not a "flag" button that resolves nothing. See [Roadmap](#11-roadmap).
+- **"Sign in with Google."** Circlo is non-custodial by design — there's no
+  account for Google to sign into, only a wallet the user already controls.
+  Building this properly would mean an email/social-recoverable smart
+  wallet (account abstraction), which is a real architecture change, not a
+  frontend tweak. Noted in the roadmap as a possible onboarding path for
+  non-crypto-native users specifically, not a replacement for Freighter.
+
+## 10. User growth
+
+**Target:** 50+ onboarded testnet users with real transaction activity for
+this submission cycle (up from 10 in the Level 4 cohort).
+
+**Channels:**
+- Direct outreach to the existing 10-person cohort to bring a friend each
+  (the same pattern that produced the first 10 — personal networks, not
+  cold traffic).
+- The Rise In / Stellar builder community and Discord.
+- The new **Discover Circles** page turns every circle someone creates into
+  a small piece of organic surface area — sharing a circle's invite link
+  (or just pointing people at `/discover`) is now a real onboarding path,
+  not only direct-ID sharing.
+- The Google Form doubles as the onboarding record: name, email, wallet
+  address, and rating are captured for every new tester, which is also
+  what feeds the Excel export required for this submission.
+
+**Proof of activity:** the [`/stats`](https://circlo-five.vercel.app/stats)
+page is a public, no-wallet-required view of real on-chain usage — circles
+created, contributions made, contribution volume, payouts settled, and
+unique wallets active, plus a live activity feed, all read directly from
+contract events. Screenshots of this page (and of the feedback
+spreadsheet's wallet-address column) are the evidence for "50+ users, real
+transaction activity" once the growth push is complete:
+_add screenshots here once the 50-user threshold is reached_.
+
+## 11. Roadmap
+
+**Near-term (next iteration):**
+- Redistribute a defaulter's forfeited deposit pro-rata to the members
+  whose payout it shorted, instead of it just sitting forfeited — see
+  [Future work](#future-work) in the architecture section.
+- A real dispute mechanism, scoped deliberately (see above) rather than
+  bolted on: likely a per-circle elected arbiter with narrow, auditable
+  powers (e.g. can only adjust strike counts, never move funds directly).
+- Remove the Discover/Stats pages' ~8 hour event-window limitation by
+  adding a proper on-chain circle index, once that's worth a contract
+  redeploy (it currently isn't, to avoid orphaning the live contract ID
+  and every circle created against it).
+
+**Mid-term:**
+- Push notifications / email digests for "your contribution is due" and
+  "your payout landed" — currently the user has to check the app.
+  Optional email-based smart-wallet onboarding (see "sign in with Google"
+  above) would make this and non-crypto-native onboarding much easier.
+- Multi-asset support beyond USDC (the contract's `token: Address` field
+  is already generic per circle — this is mostly a frontend/UX change).
+
+**Long-term:**
+- Mainnet deployment once the dispute mechanism and deposit-redistribution
+  work above have been through real testnet usage and review.
+- A mobile-first PWA or native wrapper, given how much of the target
+  audience (diaspora communities, trader associations) is mobile-primary.
 
 ## License
 
