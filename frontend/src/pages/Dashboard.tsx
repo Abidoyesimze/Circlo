@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CircleCard } from "@/components/circle/CircleCard";
+import { OnboardingChecklist } from "@/components/OnboardingChecklist";
 
 export function Dashboard() {
   const { status, address, connect } = useWallet();
@@ -56,6 +57,10 @@ export function Dashboard() {
             Create a Circle
           </Link>
         </Button>
+      </div>
+
+      <div className="mt-6">
+        <OnboardingChecklist />
       </div>
 
       <form
