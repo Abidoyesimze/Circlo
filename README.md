@@ -12,7 +12,7 @@ transparently and without a single point of failure.
 [`CC3JCXU6XMMBZDRSFLNE36DQUGIY3HQ3HAIXGFHJBF4TRQD6TFMXS53P`](https://stellar.expert/explorer/testnet/contract/CC3JCXU6XMMBZDRSFLNE36DQUGIY3HQ3HAIXGFHJBF4TRQD6TFMXS53P)
 **Feedback form:** [forms.gle/DvrEyV5fqrnumpGL7](https://forms.gle/DvrEyV5fqrnumpGL7)
 **Feedback export (Excel):** [docs/feedback/circlo-feedback-responses.xlsx](docs/feedback/circlo-feedback-responses.xlsx)
-**Pitch deck:** _add link once published_
+**Pitch deck:** [Circlo Pitch Deck](https://claude.ai/code/artifact/5f798df3-7350-46a0-b30e-ac84f117aec5) ([source](docs/pitch/circlo-pitch.html))
 
 ## Screenshots
 
