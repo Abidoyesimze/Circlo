@@ -289,23 +289,29 @@ export function CircleDetail() {
                   )}
 
                   {canTriggerPayout && (
-                    <Button
-                      className="w-full"
-                      variant="secondary"
-                      disabled={pending !== null}
-                      onClick={() =>
-                        withAction("payout", () =>
-                          sendContract(
-                            getContractClient(address ?? undefined).trigger_payout({
-                              circle_id: circleId,
-                            }),
-                            { pending: "Settling cycle...", success: "Cycle settled!" },
-                          ),
-                        )
-                      }
-                    >
-                      {pending === "payout" ? "Settling..." : "Settle This Cycle"}
-                    </Button>
+                    <div className="space-y-1.5">
+                      <Button
+                        className="w-full"
+                        variant="secondary"
+                        disabled={pending !== null}
+                        onClick={() =>
+                          withAction("payout", () =>
+                            sendContract(
+                              getContractClient(address ?? undefined).trigger_payout({
+                                circle_id: circleId,
+                              }),
+                              { pending: "Settling cycle...", success: "Cycle settled!" },
+                            ),
+                          )
+                        }
+                      >
+                        {pending === "payout" ? "Settling..." : "Settle This Cycle"}
+                      </Button>
+                      <p className="text-center text-xs text-muted-foreground">
+                        No admin approval needed &mdash; the contract lets anyone settle a ready
+                        cycle, member or not.
+                      </p>
+                    </div>
                   )}
 
                   {canClaimDeposit && (
