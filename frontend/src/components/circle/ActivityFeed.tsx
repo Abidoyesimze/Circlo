@@ -62,9 +62,12 @@ const EVENT_META: Record<string, { icon: typeof Coins; label: (e: CircleActivity
 interface ActivityFeedProps {
   events: CircleActivityEvent[] | null;
   loading: boolean;
+  /** Prefixes each entry with its circle id — for feeds spanning multiple
+   * circles (e.g. the global stats page) where that context isn't implicit. */
+  showCircleId?: boolean;
 }
 
-export function ActivityFeed({ events, loading }: ActivityFeedProps) {
+export function ActivityFeed({ events, loading, showCircleId = false }: ActivityFeedProps) {
   if (loading) {
     return (
       <div className="space-y-2">
@@ -94,6 +97,11 @@ export function ActivityFeed({ events, loading }: ActivityFeedProps) {
             >
               <Icon className="size-4 shrink-0 text-muted-foreground" />
               <span className="flex-1 truncate">
+                {showCircleId && event.circleId !== null && (
+                  <span className="mr-1.5 text-xs text-muted-foreground">
+                    #{event.circleId.toString()}
+                  </span>
+                )}
                 {meta ? meta.label(event) : event.type}
               </span>
               <span className="shrink-0 text-xs text-muted-foreground">

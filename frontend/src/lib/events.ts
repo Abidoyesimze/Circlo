@@ -13,6 +13,7 @@ export interface CircleActivityEvent {
   ledger: number;
   txHash: string;
   type: string;
+  circleId: bigint | null;
   data: Record<string, unknown>;
   timestamp: number | null;
 }
@@ -23,8 +24,8 @@ export interface CircleActivityEvent {
 // anywhere. Stay well under it; a live demo only ever needs recent history.
 const EVENT_WINDOW_LEDGERS = 6000; // ~8.3 hours at ~5s/ledger
 
-/** Fetches recent on-chain events for a single circle, newest first. */
-export async function fetchCircleActivity(circleId: bigint): Promise<CircleActivityEvent[]> {
+/** Fetches and decodes every recent contract event, newest first. */
+export async function fetchProtocolEvents(): Promise<CircleActivityEvent[]> {
   const server = new rpc.Server(RPC_URL);
   const latest = await server.getLatestLedger();
   const startLedger = Math.max(1, latest.sequence - EVENT_WINDOW_LEDGERS);
@@ -40,7 +41,6 @@ export async function fetchCircleActivity(circleId: bigint): Promise<CircleActiv
     try {
       const topics = event.topic.map((t) => scValToNative(t));
       const [eventType, topicCircleId] = topics as [string, bigint | undefined];
-      if (topicCircleId === undefined || topicCircleId !== circleId) continue;
 
       const value = scValToNative(event.value as xdr.ScVal);
       const data: Record<string, unknown> =
@@ -57,6 +57,7 @@ export async function fetchCircleActivity(circleId: bigint): Promise<CircleActiv
         ledger: event.ledger,
         txHash: event.txHash,
         type: eventType,
+        circleId: typeof topicCircleId === "bigint" ? topicCircleId : null,
         data,
         timestamp: event.ledgerClosedAt ? Date.parse(event.ledgerClosedAt) : null,
       });
@@ -67,4 +68,10 @@ export async function fetchCircleActivity(circleId: bigint): Promise<CircleActiv
   }
 
   return events.sort((a, b) => b.ledger - a.ledger);
+}
+
+/** Fetches recent on-chain events for a single circle, newest first. */
+export async function fetchCircleActivity(circleId: bigint): Promise<CircleActivityEvent[]> {
+  const events = await fetchProtocolEvents();
+  return events.filter((e) => e.circleId === circleId);
 }

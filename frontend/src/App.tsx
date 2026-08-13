@@ -14,6 +14,10 @@ const CreateCircle = lazy(() =>
 const CircleDetail = lazy(() =>
   import("@/pages/CircleDetail").then((m) => ({ default: m.CircleDetail })),
 );
+const Discover = lazy(() =>
+  import("@/pages/Discover").then((m) => ({ default: m.Discover })),
+);
+const Stats = lazy(() => import("@/pages/Stats").then((m) => ({ default: m.Stats })));
 const NotFound = lazy(() =>
   import("@/pages/NotFound").then((m) => ({ default: m.NotFound })),
 );
@@ -44,6 +48,22 @@ export default function App() {
           element={
             <Suspense fallback={<PageLoader />}>
               <CircleDetail />
+            </Suspense>
+          }
+        />
+        <Route
+          path="discover"
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <Discover />
+            </Suspense>
+          }
+        />
+        <Route
+          path="stats"
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <Stats />
             </Suspense>
           }
         />

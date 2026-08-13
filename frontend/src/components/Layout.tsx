@@ -18,7 +18,9 @@ export function Layout() {
 
   const navLinks = [
     { to: "/app", label: "Dashboard" },
+    { to: "/discover", label: "Discover" },
     { to: "/app/create", label: "Create a Circle" },
+    { to: "/stats", label: "Stats" },
   ];
 
   return (
