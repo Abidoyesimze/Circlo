@@ -11,7 +11,7 @@ transparently and without a single point of failure.
 **Deployed contract (Stellar testnet):**
 [`CC3JCXU6XMMBZDRSFLNE36DQUGIY3HQ3HAIXGFHJBF4TRQD6TFMXS53P`](https://stellar.expert/explorer/testnet/contract/CC3JCXU6XMMBZDRSFLNE36DQUGIY3HQ3HAIXGFHJBF4TRQD6TFMXS53P)
 **Feedback form:** [forms.gle/DvrEyV5fqrnumpGL7](https://forms.gle/DvrEyV5fqrnumpGL7)
-**Feedback export (Excel):** [docs/feedback/circlo-feedback-responses.xlsx](docs/feedback/circlo-feedback-responses.xlsx)
+**Feedback export (Excel):** [docs/feedback/circlo-feedback-responses.xlsx](docs/feedback/circlo-feedback-responses.xlsx) · [raw form responses (CSV)](docs/feedback/Circlo%20User%20Survey.csv)
 **Pitch deck:** [circlo-five.vercel.app/pitch.html](https://circlo-five.vercel.app/pitch.html) ([source](docs/pitch/circlo-pitch.html))
 
 ## Screenshots
@@ -276,19 +276,21 @@ in [this spreadsheet](https://docs.google.com/spreadsheets/d/1iywgRI2UVUCP-MnDdn
 and exported to
 [`docs/feedback/circlo-feedback-responses.xlsx`](docs/feedback/circlo-feedback-responses.xlsx).
 
-### Summary (10 responses so far)
+### Summary (60 responses so far)
 
-- **4.9 / 5 average rating** (nine 5s, one 4); all 10 said they'd recommend
+- **4.8 / 5 average rating** (49 fives, 11 fours); all 60 said they'd recommend
   Circlo to others.
-- **No bugs reported** by any of the 10 respondents — several explicitly
+- **No bugs reported** by any of the 60 respondents — several explicitly
   called the flow "seamless" / "smooth."
-- **Most-liked:** the simplicity of the UI, the activity feed (seeing
-  exactly when someone joined/contributed/a circle was created), the
-  payout-order visibility, and the trustline error message being caught
-  and explained clearly instead of failing silently.
-- **Most requested:** a discovery page, a dispute mechanism, clearer
-  messaging that payout doesn't need admin approval, and (from one
-  respondent) a more familiar sign-in pattern.
+- **Most-liked:** the simplicity of the UI, the group-savings concept, the
+  activity feed (seeing exactly when someone joined/contributed/a circle was
+  created), the payout flow and payout-order visibility, and the trustline
+  error message being caught and explained clearly instead of failing
+  silently.
+- **Most requested:** a discovery page, a dispute mechanism, auto-payout
+  without admin approval, clearer messaging that payout doesn't need admin
+  approval, "sign in with Google", in-app notifications, a mobile app, and
+  more payment options for funding.
 
 ### What shipped in direct response, with commits
 
@@ -319,8 +321,12 @@ and exported to
 
 ## 10. User growth
 
-**Target:** 50+ onboarded testnet users with real transaction activity for
-this submission cycle (up from 10 in the Level 4 cohort).
+**Achieved:** 50+ onboarded testnet users with real transaction activity for
+this submission cycle (up from 10 in the Level 4 cohort). The
+[`/stats`](https://circlo-five.vercel.app/stats) page shows **50 unique
+wallets active**, 32 circles created, 70 contributions (70 USDC), and 30
+payouts settled — see
+[`docs/screenshots/stats.png`](docs/screenshots/stats.png).
 
 **Channels:**
 - Direct outreach to the existing 10-person cohort to bring a friend each
@@ -341,8 +347,7 @@ created, contributions made, contribution volume, payouts settled, and
 unique wallets active, plus a live activity feed, all read directly from
 contract events. Screenshots of this page (and of the feedback
 spreadsheet's wallet-address column) are the evidence for "50+ users, real
-transaction activity" once the growth push is complete:
-_add screenshots here once the 50-user threshold is reached_.
+transaction activity."
 
 ## 11. Roadmap
 
