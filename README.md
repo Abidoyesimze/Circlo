@@ -7,7 +7,7 @@ round — with a Soroban smart contract that enforces the same rules
 transparently and without a single point of failure.
 
 **Live demo:** [circlo-five.vercel.app](https://circlo-five.vercel.app/)
-**Demo video:** [Loom walkthrough](https://www.loom.com/share/a6e2d7a7b4074fbf833060352e1a8b1d)
+**Demo video:** [Loom walkthrough]([https://www.loom.com/share/a6e2d7a7b4074fbf833060352e1a8b1d](https://www.loom.com/share/89738df31374461c846c71d7de691c80))
 **Deployed contract (Stellar testnet):**
 [`CC3JCXU6XMMBZDRSFLNE36DQUGIY3HQ3HAIXGFHJBF4TRQD6TFMXS53P`](https://stellar.expert/explorer/testnet/contract/CC3JCXU6XMMBZDRSFLNE36DQUGIY3HQ3HAIXGFHJBF4TRQD6TFMXS53P)
 **Feedback form:** [forms.gle/DvrEyV5fqrnumpGL7](https://forms.gle/DvrEyV5fqrnumpGL7)
